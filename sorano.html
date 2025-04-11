@@ -66,3 +66,115 @@
     </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医者の一週間の業務時間</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 200px;
+            margin-top: 20px;
+            border-top: 2px solid #ccc;
+        }
+        .bar {
+            width: 30px;
+            background-color: #4682b4;
+            margin: 0 5px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            color: #fff;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>医者の一週間の業務時間</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>曜日</th>
+                <th>勤務時間 (時間)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>月曜日</td>
+                <td><input type="number" id="monday" value="8" min="0" max="24"></td>
+            </tr>
+            <tr>
+                <td>火曜日</td>
+                <td><input type="number" id="tuesday" value="8" min="0" max="24"></td>
+            </tr>
+            <tr>
+                <td>水曜日</td>
+                <td><input type="number" id="wednesday" value="8" min="0" max="24"></td>
+            </tr>
+            <tr>
+                <td>木曜日</td>
+                <td><input type="number" id="thursday" value="8" min="0" max="24"></td>
+            </tr>
+            <tr>
+                <td>金曜日</td>
+                <td><input type="number" id="friday" value="8" min="0" max="24"></td>
+            </tr>
+            <tr>
+                <td>土曜日</td>
+                <td><input type="number" id="saturday" value="4" min="0" max="24"></td>
+            </tr>
+            <tr>
+                <td>日曜日</td>
+                <td><input type="number" id="sunday" value="0" min="0" max="24"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="updateChart()">グラフを更新</button>
+
+    <div class="chart" id="chart"></div>
+
+    <script>
+        function updateChart() {
+            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+            const chart = document.getElementById('chart');
+            chart.innerHTML = '';
+
+            days.forEach(day => {
+                const hours = document.getElementById(day).value;
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                bar.style.height = `${hours * 8}px`; // Height is arbitrary; this could be adjusted
+                bar.textContent = hours;
+                chart.appendChild(bar);
+            });
+        }
+
+        // 初期化
+        updateChart();
+    </script>
+
+</body>
+</html>
