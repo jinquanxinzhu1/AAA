@@ -1,1 +1,62 @@
-<h1>じょうちゃんだよーーー</h1>
+<!-- 日本地図の中で、たくさんの緊迫している病院が視覚的にわかり、緊迫度もわかるサイトを作ってをHTML1ファイルでつくって by OpenAI API -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>「緊急レベル可視化マップ ― 医療の今を知る」</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>「緊急レベル可視化マップ ― 医療の今を知る」</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // 地図の初期化
+        var map = L.map('map').setView([35.6895, 139.6917], 5); // 東京を中心に設定
+
+        // OpenStreetMap タイルを追加
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // サンプルの病院データ
+        var hospitals = [
+            {"name": "ニャンコ病院", "lat": 35.6895, "lng": 139.6917, "status": "低"},
+            {"name": "ぽっちゃん病院", "lat": 34.6937, "lng": 135.5023, "status": "中"},
+            {"name": "タムタン病院", "lat": 43.0618, "lng": 141.3545, "status": "高"},
+            {"name": "コロンボ病院", "lat": 40.0618, "lng": 141.3545, "status": "高"},
+            {"name": "コロンボ病院", "lat": 30.0618, "lng": 130.3545, "status": "高"},
+            {"name": "コロンボ病院", "lat": 33.1618, "lng": 130.2045, "status": "中"},
+            
+        ];
+
+        // 病院をプロット
+        hospitals.forEach(function(hospital) {
+            var color;
+            if (hospital.status === "高") {
+                color = "red";
+            } else if (hospital.status === "中") {
+                color = "orange";
+            } else {
+                color = "green";
+            }
+
+            var marker = L.circleMarker([hospital.lat, hospital.lng], {
+                color: color,
+                radius: 10
+            }).addTo(map);
+
+            marker.bindPopup("<b>" + hospital.name + "</b><br>緊迫度: " + hospital.status);
+        });
+    </script>
+</body>
+</html>
