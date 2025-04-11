@@ -1,1 +1,70 @@
-<h1>すいちゃんだよーーー</h1>
+<!-- 何かを送ったら適当に返してくれるアプリをHTML1ファイルでつくって by OpenAI API -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランダム応答チャットアプリ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 400px;
+            width: 300px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        #user-input {
+            width: 250px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>チャットアプリ</h2>
+<div id="chat-box"></div>
+<input type="text" id="user-input" placeholder="何か入力してください">
+<button onclick="sendMessage()">送信</button>
+
+<script>
+    const responses = [
+        "なるほど!",
+        "それは面白いですね。",
+        "もう一回言ってもらえますか?",
+        "とても良い質問です。",
+        "わかりました。",
+        "それについては考えておきます。"
+    ];
+
+    function sendMessage() {
+        const userInput = document.getElementById('user-input').value;
+        const chatBox = document.getElementById('chat-box');
+
+        // ユーザーのメッセージを追加
+        if (userInput) {
+            const userMessage = document.createElement('div');
+            userMessage.textContent = "自分: " + userInput;
+            chatBox.appendChild(userMessage);
+
+            // ランダムな応答を追加
+            const botResponse = document.createElement('div');
+            const randomIndex = Math.floor(Math.random() * responses.length);
+            botResponse.textContent = "他人: " + responses[randomIndex];
+            chatBox.appendChild(botResponse);
+
+            // 入力フィールドをクリア
+            document.getElementById('user-input').value = '';
+
+            // 常に最新メッセージにスクロール
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+    }
+</script>
+
+</body>
+</html>
