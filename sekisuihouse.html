@@ -1,74 +1,88 @@
-<!-- 何かを送ったら適当に返してくれるアプリをHTML1ファイルでつくって by OpenAI API -->
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ランダム応答チャットアプリ</title>
-    <style>
-        body {
-          
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        #chat-box {
-            border: 1px solid #ccc;
-            padding: 10px;
-            height: 400px;
-            width: 300px;
-            overflow-y: auto;
-            margin-bottom: 10px;
-        }
-        #user-input {
-            width: 250px;
-            margin-right: 10px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>オープンチャット風アプリ</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+      background-color: #f2f2f2;
+    }
+    .message {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      max-width: 70%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .input-area {
+      display: flex;
+      padding: 1rem;
+      background-color: #ddd;
+    }
+    .input-area input {
+      flex: 1;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+    }
+    .input-area button {
+      margin-left: 0.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <a href=sorano.html><img src="acaunt.png" alt="aa" style="width: 40px; height: auto;"></a>
-    <a href=ititititititit.html><img src="tizu.png" alt="aa" style="width: 40px; height: auto;"></a>
-  <a href=sekisuihouse.html><img src="chat.png" alt="aa" style="width: 40px; height: auto;"></a>
-<a href=jinquanxinzhu1.html><img src="ita.png" alt="aa" style="width: 40px; height: auto;"></a><dr>
-<h2>オープントーク</h2>
-<div id="chat-box"></div>
-<input type="text" id="user-input" placeholder="何か入力してください">
-<button onclick="sendMessage()">送信</button>
 
-<script>
-    const responses = [
-        "なるほど!",
-        "それは面白いですね。",
-        "もう一回言ってもらえますか?",
-        "とても良い質問です。",
-        "わかりました。",
-        "それについては考えておきます。"
-    ];
+  <div class="chat-container" id="chat"></div>
+
+  <div class="input-area">
+    <input type="text" id="messageInput" placeholder="メッセージを入力..." />
+    <button onclick="sendMessage()">送信</button>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('messageInput');
 
     function sendMessage() {
-        const userInput = document.getElementById('user-input').value;
-        const chatBox = document.getElementById('chat-box');
+      const text = input.value.trim();
+      if (text === '') return;
 
-        // ユーザーのメッセージを追加
-        if (userInput) {
-            const userMessage = document.createElement('div');
-            userMessage.textContent = "自分: " + userInput;
-            chatBox.appendChild(userMessage);
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+      messageDiv.textContent = text;
+      chat.appendChild(messageDiv);
 
-            // ランダムな応答を追加
-            const botResponse = document.createElement('div');
-            const randomIndex = Math.floor(Math.random() * responses.length);
-            botResponse.textContent = "他人: " + responses[randomIndex];
-            chatBox.appendChild(botResponse);
-
-            // 入力フィールドをクリア
-            document.getElementById('user-input').value = '';
-
-            // 常に最新メッセージにスクロール
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
+      input.value = '';
+      chat.scrollTop = chat.scrollHeight;
     }
-</script>
+
+    input.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+  </script>
 
 </body>
 </html>
+
+    
