@@ -1,5 +1,72 @@
 <html>
-<title>ITブートキャンプ</title>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医者の勤務記録</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2em;
+        }
+        label {
+            display: block;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>医者の勤務記録の入力</h1>
+    <form id="workScheduleForm">
+        <label>
+            出勤時間:
+            <input type="time" id="startTime" required>
+        </label>
+        <label>
+            退勤時間:
+            <input type="time" id="endTime" required>
+        </label>
+        <label>
+            外来:
+            <input type="text" id="outpatient" required>
+        </label>
+        <label>
+            病棟:
+            <input type="text" id="ward" required>
+        </label>
+        <label>
+            手術:
+            <input type="text" id="surgery" required>
+        </label>
+        <button type="button" onclick="submitForm()">送信</button>
+    </form>
+
+    <h2>入力結果</h2>
+    <div id="result"></div>
+
+    <script>
+        function submitForm() {
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const outpatient = document.getElementById('outpatient').value;
+            const ward = document.getElementById('ward').value;
+            const surgery = document.getElementById('surgery').value;
+
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>出勤時間: ${startTime}</p>
+                <p>退勤時間: ${endTime}</p>
+                <p>外来: ${outpatient}</p>
+                <p>病棟: ${ward}</p>
+                <p>手術: ${surgery}</p>
+            `;
+        }
+    </script>
+
+</body>
+</html>
 <body>
   
 </body>
