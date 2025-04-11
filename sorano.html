@@ -1,121 +1,68 @@
-<html>
-<!DOCTYPE html>
+
+            <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>医者の勤務記録</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 2em;
-        }
-        label {
-            display: block;
-            margin-top: 1em;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>医者の勤務記録の入力</h1>
-    <form id="workScheduleForm">
-        <label>
-            出勤時間:
-            <input type="time" id="startTime" required>
-        </label>
-        <label>
-            退勤時間:
-            <input type="time" id="endTime" required>
-        </label>
-        <label>
-            外来:
-            <input type="text" id="outpatient" required>
-        </label>
-        <label>
-            病棟:
-            <input type="text" id="ward" required>
-        </label>
-        <label>
-            手術:
-            <input type="text" id="surgery" required>
-        </label>
-        <button type="button" onclick="submitForm()">送信</button>
-    </form>
-
-    <h2>入力結果</h2>
-    <div id="result"></div>
-
-    <script>
-        function submitForm() {
-            const startTime = document.getElementById('startTime').value;
-            const endTime = document.getElementById('endTime').value;
-            const outpatient = document.getElementById('outpatient').value;
-            const ward = document.getElementById('ward').value;
-            const surgery = document.getElementById('surgery').value;
-
-            const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `
-                <p>出勤時間: ${startTime}</p>
-                <p>退勤時間: ${endTime}</p>
-                <p>外来: ${outpatient}</p>
-                <p>病棟: ${ward}</p>
-                <p>手術: ${surgery}</p>
-            `;
-        }
-    </script>
-
-</body>
-</html>
-<body>
-  
-</body>
-<html>
-
-    <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>医者の勤務時間</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>医者の業務時間管理</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
         }
+        .container {
+            max-width: 500px;
+            margin: auto;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>医者の勤務時間</h1>
-    <canvas id="workingHoursChart" width="400" height="200"></canvas>
+    <div class="container">
+        <h1>医者の業務時間入力</h1>
+        <form id="workForm">
+            <div>
+                <label for="outpatient">外来 (時間):</label>
+                <input type="number" id="outpatient" name="outpatient" min="0" required>
+            </div>
+            <div>
+                <label for="surgery">手術 (時間):</label>
+                <input type="number" id="surgery" name="surgery" min="0" required>
+            </div>
+            <div>
+                <label for="ward">病棟患者 (時間):</label>
+                <input type="number" id="ward" name="ward" min="0" required>
+            </div>
+            <button type="submit">グラフを描く</button>
+        </form>
+
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
 
     <script>
-        const ctx = document.getElementById('workingHoursChart').getContext('2d');
-        const data = {
-            labels: ['月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日', '日曜日'],
-            datasets: [{
-                label: '勤務時間 (時間)',
-                data: [8, 10, 9, 8, 7, 4, 0], // サンプルの勤務時間データ
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        };
+        document.getElementById('workForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const outpatient = parseInt(document.getElementById('outpatient').value);
+            const surgery = parseInt(document.getElementById('surgery').value);
+            const ward = parseInt(document.getElementById('ward').value);
 
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['外来', '手術', '病棟患者'],
+                    datasets: [{
+                        data: [outpatient, surgery, ward],
+                        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe'],
+                    }]
+                },
+                options: {
+                    responsive: true
                 }
-            }
-        };
-
-        const workingHoursChart = new Chart(ctx, config);
+            });
+        });
     </script>
 </body>
 </html>
