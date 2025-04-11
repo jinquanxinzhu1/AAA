@@ -178,3 +178,68 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>病院記録アプリ</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        form, table { margin: 20px 0; }
+        td, th { padding: 10px; text-align: center; }
+        input[type="number"] { width: 60px; }
+    </style>
+</head>
+<body>
+
+    <h1>病院記録アプリ</h1>
+
+    <form id="recordForm">
+        <label for="doctors">医者の数:</label>
+        <input type="number" id="doctors" name="doctors" min="0" required>
+
+        <label for="patients">患者の数:</label>
+        <input type="number" id="patients" name="patients" min="0" required>
+
+        <button type="submit">記録する</button>
+    </form>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>日付</th>
+                <th>医者の数</th>
+                <th>患者の数</th>
+            </tr>
+        </thead>
+        <tbody id="recordsTableBody">
+            <!-- 記録がここに追加されます -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('recordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // フォームのデフォルト送信動作を防ぐ
+
+            const date = new Date().toLocaleDateString();
+            const doctors = document.getElementById('doctors').value;
+            const patients = document.getElementById('patients').value;
+
+            const tableBody = document.getElementById('recordsTableBody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td>${date}</td>
+                <td>${doctors}</td>
+                <td>${patients}</td>
+            `;
+
+            tableBody.appendChild(newRow);
+
+            document.getElementById('recordForm').reset(); // フォームをリセット
+        });
+    </script>
+
+</body>
+</html>
